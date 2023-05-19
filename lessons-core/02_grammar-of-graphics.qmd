@@ -6,6 +6,7 @@ format:
   html: 
     code-line-numbers: true
     self-contained: true
+    toc: true
 execute: 
   warning: false
   message: false
@@ -76,7 +77,7 @@ There are <font color="#ec008b">**eight**</font> main ingredients to the grammar
 
 ### `r kableExtra::text_spec("Exercise 0", color = "#1696d2")`
 
-<font color="#55b748">Step 1:</font> Open `2022_crs_intro-to-r.Rproj`.
+<font color="#55b748">Step 1:</font> Open `2023_asa-data-viz.Rproj`.
 
 <font color="#55b748">Step 2:</font> Open `02_workbook.Rmd`. 
 
@@ -237,7 +238,7 @@ recent_storms %>%
 
 <font color="#55b748">Step 2:</font> Replace `color = category` with `color = "green"`. Run the code. What changed? Is this unexpected?
 
-<font color="#55b748">Step 3:</font> Remove `color = "green"` from `aes()` and add it inside inside of `geom_point()` but outside of `aes()`. Run the code.
+<font color="#55b748">Step 3:</font> Remove `color = "green"` from `aes()` and add it inside of `geom_point()` but outside of `aes()`. Run the code.
 
 <font color="#55b748">Step 4:</font> This is a little cluttered. Add `alpha = 0.2` inside `geom_point()` but outside of `aes()`.
 

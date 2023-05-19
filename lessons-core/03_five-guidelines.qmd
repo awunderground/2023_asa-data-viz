@@ -1,21 +1,15 @@
 ---
-title: "Introduction and Motivation"
+title: "Jon Schwabish's Five Guidelines in R"
+subtitle: "Introduction to the R Programming Language"
 author: "Aaron R. Williams"
-output:
-  html_document:
-    code_folding: show
-    toc: TRUE
-    toc_float: TRUE
-    css: !expr here::here("www", "web_report.css")
-editor_options:
-  chunk_output_type: console
+format: 
+  html: 
+    code-line-numbers: true
+    embed-resources: true
+execute: 
+  warning: false
+  message: false
 ---
-
-<style>
-@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
-</style>
-
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato" />
 
 ```{css echo=FALSE}
 h1 {
@@ -27,20 +21,15 @@ p {
 }
 ```
 
-```{r rmarkdown-setup, echo = FALSE}
-knitr::opts_chunk$set(warning = FALSE)
-knitr::opts_chunk$set(message = FALSE)
-```
-
 ## Better Data Visualizations
 
-My coworker [Jon Schwabish](https://policyviz.com/) wrote a book called [Better Data Visualizations](https://policyviz.com/pv_books/better-data-visualizations-a-guide-for-scholars-researchers-and-wonks/). Chapter two includes five guidelines for better data visualizations. We will work through the five guidelines with examples in `library(ggplot2)`. Jon has taught me a ton about data viz and [I taught Jon how to use R](https://urban-institute.medium.com/learning-r-a-conversation-982130d75104). 
+[Jon Schwabish](https://policyviz.com/) wrote a book called [Better Data Visualizations](https://policyviz.com/pv_books/better-data-visualizations-a-guide-for-scholars-researchers-and-wonks/). Chapter two includes five guidelines for better data visualizations. We will work through the five guidelines with examples in `library(ggplot2)`. Jon has taught me a ton about data viz and [I taught Jon how to use R](https://urban-institute.medium.com/learning-r-a-conversation-982130d75104). 
 
 -----
 
 # Guideline 1: Show the Data
 
->"Your reader can only grasp your point, argument, or story if they see the data."
+> "Your reader can only grasp your point, argument, or story if they see the data."
 
 Schwabish focuses on communications, but this rule holds true for analysis too. Let's consider the classic example of [Anscombe's quartet](https://en.wikipedia.org/wiki/Anscombe%27s_quartet). 
 
@@ -115,8 +104,9 @@ A few things to avoid:
 
 Consider this image from Claus Wilke's [Fundamental's of Data Visualization](https://clauswilke.com/dataviz/). 
 
-```{r echo=FALSE}
-knitr::include_graphics(here::here("www", "images", "titanic-3d-1.png"))
+```{r}
+#| echo: false
+knitr::include_graphics(here::here("images", "titanic-3d-1.png"))
 
 ```
 
@@ -128,7 +118,8 @@ knitr::include_graphics(here::here("www", "images", "titanic-3d-1.png"))
 
 <font color="#55b748">Step 1:</font> Copy-and-paste the following data into your exercise document. 
 
-```{r eval = FALSE}
+```{r}
+#| eval: false
 titanic <- tribble(
   ~Class, ~Sex, ~n,
   "1st class", "female passengers", 144,
@@ -177,13 +168,15 @@ titanic <- tribble(
 
 <font color="#55b748">Step 4:</font> Add the following code:
 
-```
+```{r}
+#| eval: false
   theme(plot.title = element_markdown())
 ```
 
 <font color="#55b748">Step 5:</font> Add the following code:
 
-```
+```{r}
+#| eval: false
   labs(
     title = "More 
     <span style='color:#00BFC4;'>male passengers</span> died than 
@@ -201,7 +194,8 @@ titanic <- tribble(
 
 For a publication, we could continue refining this exercise. Here is an example:
 
-```{r echo = FALSE}
+```{r}
+#| eval: false
 library(ggtext)
 
 tribble(
@@ -248,6 +242,77 @@ Faceting or using small multiples is a useful way to declutter a busy data visua
 1. Arrange the small multiples in a logical order
 2. Use the same layout, size, font, and color in each small multiple
 
+<br>
+
+Consider an example where we are writing about the relationship between per capita GDP and life expectancy over time in the United States and two comparison countries. By default, the facets will show up in alpha-numeric order (Canada, Mexico, United States). What if we want to change the order so the United States is first and the two comparison countries come later?
+
+To do this, we just need to turn `country` into a factor variable with `mutate()` and `factor()`. 
+
+```{r}
+library(gapminder)
+
+countries <- c("United States", "Mexico", "Canada")
+
+gapminder %>%
+  filter(country %in% countries) %>%
+  mutate(country = factor(country, levels = countries)) %>%
+  ggplot(aes(gdpPercap, lifeExp, color = country)) +
+  geom_path(color = "grey") +
+  geom_point() +
+  scale_x_continuous(
+    limits = c(0, 50000),
+    breaks = c(0, 20000, 40000), 
+    labels = scales::dollar
+  ) + 
+  facet_wrap(~ country) +
+  labs(
+    title = "The United States has Made Less Progress in Life Expectancy,\nEven as it has Gotten Richer", 
+    x = "Per capita GDP",
+    y = "Life Expectancy",
+    caption = "gapminder data from 1952-2007"
+  ) +
+  guides(color = "none")
+
+```
+
+Futher, we can label the first and last years but only in the first facet. 
+
+```{r}
+library(gapminder)
+library(ggrepel)
+
+years <- c(1952, 2007)
+countries <- c("United States", "Mexico", "Canada")
+
+gapminder %>%
+  filter(country %in% countries) %>%
+  mutate(country = factor(country, levels = countries)) %>%
+  mutate(
+    year = if_else(
+      condition = country == "United States" & year %in% years, 
+      true = year,
+      false = NA_integer_
+    )
+  ) %>%
+  ggplot(aes(gdpPercap, lifeExp, color = country)) +
+  geom_path(color = "grey") +
+  geom_point() +
+  geom_text(aes(label = year, y = lifeExp - 2), color = "black") +
+  scale_x_continuous(
+    limits = c(0, 50000),
+    breaks = c(0, 20000, 40000), 
+    labels = scales::dollar
+  ) + 
+  facet_wrap(~ country) +
+  labs(
+    title = "The United States has Made Less Progress in Life Expectancy,\nEven as it has Gotten Richer", 
+    x = "Per capita GDP",
+    y = "Life Expectancy",
+    caption = "gapminder data from 1952-2007"
+  ) +
+  guides(color = "none")
+
+```
 -----
 
 # Guideline 5: Start with Gray
@@ -264,7 +329,8 @@ Faceting or using small multiples is a useful way to declutter a busy data visua
 
 <font color="#55b748">Step 2:</font> Copy-and-paste the following code to create a data frame with the cumulative change in per-capita GDP in European countries:
 
-```
+```{r}
+#| eval: false
 data <- gapminder %>%
   filter(continent %in% c("Europe")) %>%
   group_by(country) %>%
@@ -277,7 +343,8 @@ data <- gapminder %>%
 
 <font color="#55b748">Step 4:</font> Add the following code to clean up the x-axis and y-axis.
 
-```
+```{r}
+#| eval: false
   scale_x_continuous(
     expand = expansion(mult = c(0.002, 0)),
     breaks = c(seq(1950, 2010, 10)),

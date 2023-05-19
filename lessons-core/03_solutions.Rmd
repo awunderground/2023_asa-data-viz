@@ -60,7 +60,7 @@ titanic %>%
   ggplot(mapping = aes(Class, n, fill = Sex)) +
   geom_col() +
   labs(
-    title = "The Titanic Had Many 3rd Class Passengers",
+    title = "Many Passengers Died in 3rd Class",
     subtitle = "subtitle",
     caption = "caption",
     y = NULL, 

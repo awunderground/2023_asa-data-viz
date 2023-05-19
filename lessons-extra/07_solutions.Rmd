@@ -39,11 +39,11 @@ dates %>%
 ```{r}
 # https://fred.stlouisfed.org/series/UNRATE
 # accessed on 2021-11-19
-u3_rate <- read_csv(here("day03", "data", "UNRATE.csv"))
+u3_rate <- read_csv(here("data", "UNRATE.csv"))
 
 # https://fred.stlouisfed.org/series/U6RATE
 # accessed on 2021-11-19
-u6_rate <- read_csv(here("day03", "data", "U6RATE.csv"))
+u6_rate <- read_csv(here("data", "U6RATE.csv"))
 
 # combine the U3 and U6 data
 rates <- left_join(u3_rate, u6_rate, by = "DATE")
@@ -80,8 +80,8 @@ fed_funds_rate <- read_csv(
    2020-03-03,0.0125,0.01
    2020-03-15,0.0025,0
    2022-03-16,0.005,0.0025
-   2022-05-04,0.1,0.0075
-   2022-06-15,0.175,0.015
+   2022-05-04,0.01,0.0075
+   2022-06-15,0.0175,0.015
    2022-07-27,0.025,0.0225
    2022-09-21,0.0325,0.03
    2022-11-02,0.04,0.0375
@@ -150,7 +150,8 @@ rates %>%
   geom_line(aes(DATE, UNRATE)) +
   geom_rect(
     data = filter(recessions, Peak >= "1950-01-01"),
-    aes(xmin = Peak, xmax = Trough, ymin = 0, ymax = 0.2), alpha = 0.3
+    aes(xmin = Peak, xmax = Trough, ymin = 0, ymax = 0.2), 
+    alpha = 0.3
   ) + 
   scale_y_continuous(
     limits = c(0, NA),
@@ -163,7 +164,7 @@ rates %>%
     y = "Unemployment Rate",
     caption = "Source: Bureau of Labor Statistics data accessed through FRED"
   ) +
-  annotate(geom = "text", x = date("2009-01-01"), y = 0.17, label = "The Great\nRecession")
+  annotate(geom = "text", x = date("2020-01-01"), y = 0.17, label = "Covid-19\nPandemic")
 
 ```
 

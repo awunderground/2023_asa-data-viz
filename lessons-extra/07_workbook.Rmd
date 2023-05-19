@@ -38,11 +38,11 @@ dates <- tribble(
 ```{r}
 # https://fred.stlouisfed.org/series/UNRATE
 # accessed on 2021-11-19
-u3_rate <- read_csv(here("day03", "data", "UNRATE.csv"))
+u3_rate <- read_csv(here("data", "UNRATE.csv"))
 
 # https://fred.stlouisfed.org/series/U6RATE
 # accessed on 2021-11-19
-u6_rate <- read_csv(here("day03", "data", "U6RATE.csv"))
+u6_rate <- read_csv(here("data", "U6RATE.csv"))
 
 # combine the U3 and U6 data
 rates <- left_join(u3_rate, u6_rate, by = "DATE")

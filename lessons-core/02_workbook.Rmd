@@ -98,3 +98,9 @@ Created a scatter plot that shows the relationship between pressure and wind.
 # YOUR WORK GOES HERE
 
 ```
+
+
+
+```{r}
+sessionInfo()
+```
