@@ -35,8 +35,7 @@ tidy_anscombe <-
   ungroup() %>%
   select(-id)
 
-tidy_anscombe %>%
-  ggplot(aes(x, y)) +
+ggplot(data = tidy_anscombe, mapping = aes(x = x, y = y)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE) +
   facet_wrap(~ quartet)
@@ -57,12 +56,12 @@ titanic <- tribble(
 )
 
 titanic %>%
-  ggplot(mapping = aes(Class, n, fill = Sex)) +
+  ggplot(mapping = aes(Class, n, fill = Sex)) + 
   geom_col() +
   labs(
-    title = "Many Passengers Died in 3rd Class",
-    subtitle = "subtitle",
-    caption = "caption",
+    title = "Titanic Deaths were Concentrated in 3rd Class", 
+    subtitle = "subtitle", 
+    caption = "caption", 
     y = NULL, 
     fill = "Legend: Sex"
   )
@@ -95,7 +94,7 @@ titanic %>%
   labs(
     title = "More 
     <span style='color:#00BFC4;'>male passengers</span> died than 
-    <span style='color:#F8766D;'>female passengers</span> in all three classes",
+    <span style='color:#F8766D;'>female passengers</span> in all three classes on the Titanic",
     x = NULL,
     y = NULL
   ) +
@@ -168,7 +167,7 @@ data %>%
 data %>%
   ggplot(mapping = aes(x = year, y = pcgdp_change, color = country)) +
   geom_line() +
-  gghighlight(max(pcgdp_change) > 35000) +
+  gghighlight(max(pcgdp_change) < 35000) +
   scale_x_continuous(
     expand = expansion(mult = c(0.002, 0)),
     breaks = c(seq(1950, 2010, 10)),

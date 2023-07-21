@@ -444,14 +444,6 @@ Before transformations, each observation in data is represented by one geometric
 
 -----
 
-### `r kableExtra::text_spec("Exercise 8", color = "#1696d2")`
-
-<font color="#55b748">Step 1:</font> Duplicate Exercise 6.
-
-<font color="#55b748">Step 2:</font> Add `theme_minimal()` to the end of the code. 
-
------
-
 ### Themes
 
 <font color="#ec008b">**8 Theme**</font> controls the visual style of plot with font types, font sizes, background colors, margins, and positioning.
@@ -514,7 +506,7 @@ If you prefer the minimal theme, you can add `theme_minimal()` to each visualiza
 
 -----
 
-### `r kableExtra::text_spec("Exercise 9 (layers!)", color = "#1696d2")`
+### `r kableExtra::text_spec("Exercise 8 (layers!)", color = "#1696d2")`
 
 <font color="#55b748">Step 1:</font> Add the following exercise to you script. Run it!
 
@@ -533,7 +525,7 @@ storms %>%
 
 -----
 
-### `r kableExtra::text_spec("Exercise 10", color = "#1696d2")`
+### `r kableExtra::text_spec("Exercise 9", color = "#1696d2")`
 
 <font color="#55b748">Step 1:</font> Add the following exercise to you script. Run it!
 
@@ -549,7 +541,7 @@ ggplot(data = storms, mapping = aes(x = pressure, y = wind)) +
 
 -----
 
-### `r kableExtra::text_spec("Exercise 11", color = "#1696d2")`
+### `r kableExtra::text_spec("Exercise 10", color = "#1696d2")`
 
 <font color="#55b748">Step 1:</font> Pick your favorite plot from exercises 1 through 9 and duplicate it in a new code chunk. 
 

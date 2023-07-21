@@ -42,7 +42,7 @@ tribble(
   ~Class, ~`male passengers/female passengers`,
   "1st class", "179|144",
   "2nd class", "171|106",
-  "3rd class", "493|216",
+  "3rd class", "493|216"
 )  %>%
   separate(
     col = `male passengers/female passengers`,

@@ -92,13 +92,6 @@ Created a scatter plot that shows the relationship between pressure and wind.
 
 ```
 
-## Exercise 11
-
-```{r}
-# YOUR WORK GOES HERE
-
-```
-
 
 
 ```{r}
